@@ -47,6 +47,7 @@ export function setupRoutes(app: Express): void {
           nextCursor
         });
       } catch (err) {
+        console.error(err);
         next(err);
       }
     }
