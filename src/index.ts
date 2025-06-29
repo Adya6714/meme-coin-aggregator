@@ -5,6 +5,8 @@ import path from 'path';                // ← import path
 import { Server } from 'socket.io';
 import { setupRoutes } from './routes';
 import { setupWebSocket } from './websocket';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app: Express = express();
 const server = http.createServer(app);
