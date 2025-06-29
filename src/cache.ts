@@ -1,17 +1,15 @@
-import Redis from 'ioredis';
+import { Redis } from '@upstash/redis';
 
-// Connect to Redis at default localhost:6379
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+// Automatically uses UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN from env
+export const redis = Redis.fromEnv();
 
 /**
  * Try to read JSON-parsed value from Redis.
  * @param key cache key
  */
-
-
 export async function getCached<T>(key: string): Promise<T | null> {
   const value = await redis.get(key);
-  return value ? JSON.parse(value) : null;
+  return value ? JSON.parse(value as string) : null;
 }
 
 /**
@@ -26,6 +24,5 @@ export async function setCached(
   ttlSeconds = 30
 ): Promise<void> {
   const str = JSON.stringify(value);
-  // EX = expire seconds
-  await redis.set(key, JSON.stringify(value), 'EX', ttlSeconds);
+  await redis.setex(key, ttlSeconds, str); // Upstash supports EX
 }
