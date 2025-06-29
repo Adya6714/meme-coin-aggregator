@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>WebSocket Test</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    #log { list-style: none; padding: 0; }
+    #log li { margin-bottom: 0.5rem; }
+    .spike-price  { color: darkred;  }
+    .spike-volume { color: darkblue; }
+  </style>
+</head>
+<body>
+  <h1>WebSocket Test</h1>
+  <ul id="log"></ul>
+
+  <script>
+    // Grab the <ul> where we'll insert messages
+    const logEl = document.getElementById('log');
+
+    // Connect to your Socket.IO server
+    const socket = io('http://localhost:3000');
+
+    // When connected, subscribe to "doge" updates for 1h volume
+    socket.on('connect', () => {
+      console.log('Connected as', socket.id);
+      socket.emit('subscribeToToken', { query: 'doge', period: '1h' });
+    });
+
+    // On every update, show a simple log entry
+    socket.on('priceUpdate', (payload) => {
+      console.log('priceUpdate', payload);
+      const li = document.createElement('li');
+      li.textContent = 
+        `Update at ${new Date(payload.timestamp).toLocaleTimeString()} — ` +
+        `${payload.data.length} tokens`;
+      logEl.prepend(li);
+    });
+
+    // On a price spike, prepend a red entry
+    socket.on('priceSpike', (data) => {
+      console.warn('🔺 Price Spike', data);
+      const li = document.createElement('li');
+      li.classList.add('spike-price');
+      const percent = (data.change * 100).toFixed(2);
+      li.textContent = 
+        `Price spike for ${data.token_address}: ` +
+        `${data.old_price} → ${data.new_price} (${percent}%)`;
+      logEl.prepend(li);
+    });
+
+    // On a volume spike, prepend a blue entry
+    socket.on('volumeSpike', (data) => {
+      console.warn('📈 Volume Spike', data);
+      const li = document.createElement('li');
+      li.classList.add('spike-volume');
+      const factor = data.factor.toFixed(2);
+      li.textContent = 
+        `Volume spike for ${data.token_address}: ` +
+        `${data.old_volume} → ${data.new_volume} (x${factor})`;
+      logEl.prepend(li);
+    });
+
+    // Errors
+    socket.on('priceError', (err) => {
+      console.error('priceError:', err);
+    });
+    socket.on('connect_error', (err) => {
+      console.error('connect_error:', err);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "3f4646e4-74a0-4af3-8317-1bdf1140a247",
+		"name": "Meme Coin Aggregator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46283077",
+		"_collection_link": "https://adya-7869347.postman.co/workspace/Adya's-Workspace~5445f8a0-c6dd-4a0e-8345-5e755fb106f9/collection/46283077-3f4646e4-74a0-4af3-8317-1bdf1140a247?action=share&source=collection_link&creator=46283077"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tokens/doge",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tokens",
+						"doge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch DOGE Default",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tokens/doge",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tokens",
+						"doge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch DOGE (1h)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tokens/doge?period=1h",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tokens",
+						"doge"
+					],
+					"query": [
+						{
+							"key": "period",
+							"value": "1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch DOGE (7d)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tokens/doge?period=1h",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tokens",
+						"doge"
+					],
+					"query": [
+						{
+							"key": "period",
+							"value": "1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch DOGE by MarketCap (limit=5)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tokens/doge?sortBy=marketCap&limit=5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tokens",
+						"doge"
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "marketCap"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch DOGE by MarketCap (page 2)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tokens/doge?sortBy=marketCap&limit=5&cursor=nextCursor",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tokens",
+						"doge"
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "marketCap"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "cursor",
+							"value": "nextCursor"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
