@@ -1,20 +1,17 @@
 import Redis from 'ioredis';
 
 // Connect to Redis at default localhost:6379
-const redis = new Redis();
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
 /**
  * Try to read JSON-parsed value from Redis.
  * @param key cache key
  */
+
+
 export async function getCached<T>(key: string): Promise<T | null> {
-  const raw = await redis.get(key);
-  if (!raw) return null;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return null;
-  }
+  const value = await redis.get(key);
+  return value ? JSON.parse(value) : null;
 }
 
 /**
@@ -30,5 +27,5 @@ export async function setCached(
 ): Promise<void> {
   const str = JSON.stringify(value);
   // EX = expire seconds
-  await redis.set(key, str, 'EX', ttlSeconds);
+  await redis.set(key, JSON.stringify(value), 'EX', ttlSeconds);
 }
