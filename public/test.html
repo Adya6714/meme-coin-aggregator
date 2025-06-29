@@ -21,7 +21,7 @@
     const logEl = document.getElementById('log');
 
     // Connect to your Socket.IO server
-    const socket = io("wss://meme-coin-aggregator.onrender.com");
+    const socket = io('https://meme-coin-aggregator.onrender.com');
 
     // When connected, subscribe to "doge" updates for 1h volume
     socket.on('connect', () => {
